@@ -1,3 +1,57 @@
+// THÊM VÀO ĐẦU FILE scriptIndex.js
+
+// Kiểm tra trạng thái đăng nhập và cập nhật menu
+function updateMenuByLoginStatus() {
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const isLoggedIn = userData && userData.isLoggedIn;
+    
+    const accountSubmenu = document.querySelector('.account-submenu');
+    
+    if (accountSubmenu) {
+        if (isLoggedIn) {
+            // Đã đăng nhập: Hiện "Quản lý tài khoản", ẩn "Đăng ký"
+            accountSubmenu.innerHTML = `
+                <li><a href="account.html"><i class="fas fa-user-circle"></i> Quản lý tài khoản</a></li>
+                <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
+            `;
+            
+            // Thêm sự kiện đăng xuất
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('Bạn có chắc muốn đăng xuất?')) {
+                        localStorage.removeItem('userData');
+                        alert('Đăng xuất thành công!');
+                        location.reload();
+                    }
+                });
+            }
+        } else {
+            // Chưa đăng nhập: Ẩn "Quản lý tài khoản", hiện "Đăng nhập" và "Đăng ký"
+            accountSubmenu.innerHTML = `
+                <li><a href="login-register.html" target="_blank"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a></li>
+                <li><a href="login-register.html#register" target="_blank" id="go-to-register"><i class="fas fa-user-plus"></i> Đăng ký</a></li>
+            `;
+        }
+    }
+}
+
+// Gọi hàm khi load trang
+document.addEventListener('DOMContentLoaded', function() {
+    updateMenuByLoginStatus();
+    
+    // ... phần code cũ của bạn ở đây ...
+});
+
+
+
+
+
+
+
+
+
 // --slideshow--
 var n = 5;
 var i = 1;
@@ -89,6 +143,30 @@ function updateCartCount() {
 
 // ===== LOAD TRANG =====
 document.addEventListener('DOMContentLoaded', function() {
+	
+	
+	// Xử lý account dropdown cho mobile
+	const accountDropdown = document.querySelector('.account-dropdown');
+	if (accountDropdown) {
+		const accountLink = accountDropdown.querySelector('a');
+		
+		accountLink.addEventListener('click', function(e) {
+			if (window.innerWidth <= 768) {
+				e.preventDefault();
+				accountDropdown.classList.toggle('active');
+				
+				const icon = this.querySelector('.fa-angle-down');
+				if (icon) {
+					if (accountDropdown.classList.contains('active')) {
+						icon.style.transform = 'rotate(180deg)';
+					} else {
+						icon.style.transform = 'rotate(0deg)';
+					}
+				}
+			}
+		});
+	}
+	
     
     // 1. XỬ LÝ MENU VÀ SIDEBAR CHO MOBILE
     const menuContainer = document.querySelector('#menu .container');

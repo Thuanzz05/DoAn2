@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Tài Khoản - NDT Gift</title>
+    <link rel="stylesheet" href="styles/styleAccount.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" href="images/iconWeb.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-home"><i class="fas fa-arrow-left"></i> Về trang chủ</a>
+        
+        <div class="header">
+            <h1><i class="fas fa-user-circle"></i> Quản Lý Tài Khoản</h1>
+            <button class="logout-btn" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+            </button>
+        </div>
+
+        <div class="account-content">
+            <div class="sidebar">
+                <div class="menu-item active" data-section="info">
+                    <i class="fas fa-user"></i>
+                    <span>Thông tin tài khoản</span>
+                </div>
+                <div class="menu-item" data-section="edit">
+                    <i class="fas fa-edit"></i>
+                    <span>Chỉnh sửa thông tin</span>
+                </div>
+                <div class="menu-item" data-section="password">
+                    <i class="fas fa-key"></i>
+                    <span>Đổi mật khẩu</span>
+                </div>
+                <div class="menu-item" data-section="orders">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Đơn hàng của tôi</span>
+                </div>
+            </div>
+
+            <div class="main-content">
+                <!-- UC-TK-04: Xem thông tin tài khoản -->
+                <div class="section active" id="info">
+                    <h2 class="section-title">Thông Tin Tài Khoản</h2>
+                    <div class="info-card">
+                        <div class="info-row">
+                            <div class="info-label">Họ và tên:</div>
+                            <div class="info-value" id="display-name">Nguyễn Văn A</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Email:</div>
+                            <div class="info-value" id="display-email">nguyenvana@example.com</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Số điện thoại:</div>
+                            <div class="info-value" id="display-phone">0329649661</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Địa chỉ:</div>
+                            <div class="info-value" id="display-address">123 Đường ABC, Quận XYZ, TP.HCM</div>
+                        </div>
+                        <div class="info-row">
+                            <div class="info-label">Ngày tham gia:</div>
+                            <div class="info-value" id="display-joindate">01/01/2025</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- UC-TK-03: Cập nhật thông tin -->
+                <div class="section" id="edit">
+                    <h2 class="section-title">Chỉnh Sửa Thông Tin</h2>
+                    <div class="alert alert-success" id="edit-success">
+                        <i class="fas fa-check-circle"></i> Cập nhật thông tin thành công!
+                    </div>
+                    <div class="alert alert-error" id="edit-error">
+                        <i class="fas fa-exclamation-circle"></i> Có lỗi xảy ra, vui lòng kiểm tra lại thông tin!
+                    </div>
+                    
+                    <form id="edit-form">
+                        <div class="form-group">
+                            <label for="edit-name">Họ và tên *</label>
+                            <input type="text" class="form-control" id="edit-name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit-phone">Số điện thoại *</label>
+                            <input type="tel" class="form-control" id="edit-phone" pattern="[0-9]{10}" required>
+                            <small style="color: #666;">Định dạng: 10 chữ số</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="edit-address">Địa chỉ</label>
+                            <input type="text" class="form-control" id="edit-address">
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Lưu thay đổi
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="cancelEdit()">
+                            <i class="fas fa-times"></i> Hủy
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Đổi mật khẩu -->
+                <div class="section" id="password">
+                    <h2 class="section-title">Đổi Mật Khẩu</h2>
+                    <div class="alert alert-success" id="password-success">
+                        <i class="fas fa-check-circle"></i> Đổi mật khẩu thành công!
+                    </div>
+                    <div class="alert alert-error" id="password-error">
+                        <i class="fas fa-exclamation-circle"></i> Mật khẩu không khớp hoặc không hợp lệ!
+                    </div>
+                    
+                    <form id="password-form">
+                        <div class="form-group">
+                            <label for="current-password">Mật khẩu hiện tại *</label>
+                            <input type="password" class="form-control" id="current-password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new-password">Mật khẩu mới *</label>
+                            <input type="password" class="form-control" id="new-password" minlength="6" required>
+                            <small style="color: #666;">Tối thiểu 6 ký tự</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm-password">Xác nhận mật khẩu mới *</label>
+                            <input type="password" class="form-control" id="confirm-password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-key"></i> Đổi mật khẩu
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Đơn hàng -->
+                <div class="section" id="orders">
+                    <h2 class="section-title">Đơn Hàng Của Tôi</h2>
+                    <div class="info-card" id="orders-container">
+                        <p style="text-align: center; color: #666; padding: 40px 0;">
+                            <i class="fas fa-box-open" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
+                            Bạn chưa có đơn hàng nào
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/scriptAccount.js"></script>
+</body>
+</html>
