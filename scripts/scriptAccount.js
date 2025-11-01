@@ -1,4 +1,3 @@
-// Khởi tạo khi load trang
 document.addEventListener('DOMContentLoaded', function() {
     // Kiểm tra đăng nhập
     const isLoggedIn = checkLogin();
@@ -117,6 +116,29 @@ function handleEditSubmit(e) {
         accounts[accountIndex].address = address;
         localStorage.setItem('accounts', JSON.stringify(accounts));
     }
+    
+    // Đồng bộ với danh sách customers của admin
+    const customers = JSON.parse(localStorage.getItem('customers') || '[]');
+    const customerIndex = customers.findIndex(c => c.email === userData.email);
+    
+    if (customerIndex !== -1) {
+        customers[customerIndex].name = name;
+        customers[customerIndex].phone = phone;
+        customers[customerIndex].address = address;
+        localStorage.setItem('customers', JSON.stringify(customers));
+    } else {
+        // Nếu chưa có trong customers, thêm mới (trường hợp khách hàng đăng ký trước khi có tính năng đồng bộ)
+        const newCustomerId = customers.length > 0 ? Math.max(...customers.map(c => c.id)) + 1 : 1;
+        customers.push({
+            id: newCustomerId,
+            name: name,
+            email: userData.email,
+            phone: phone,
+            address: address,
+            joinDate: new Date().toISOString().split('T')[0]
+        });
+        localStorage.setItem('customers', JSON.stringify(customers));
+    }
 
     // Cập nhật hiển thị
     loadUserData();
@@ -209,12 +231,17 @@ function handleLogout() {
         // Xóa session
         localStorage.removeItem('userData');
         
+        // localStorage.removeItem('cart');
+
         alert('Đăng xuất thành công!');
         window.location.href = 'index.html';
     }
 }
 
-// Load đơn hàng (mở rộng sau)
+// Hàm đăng xuất từ trang index (dùng chung)
+window.handleLogoutFromIndex = handleLogout;
+
+// Load đơn hàng 
 function loadOrders() {
     const orders = [];
     
