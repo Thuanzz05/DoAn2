@@ -2030,3 +2030,31 @@ ul {
         margin: 0 auto;
     }
 }
+
+/* Style cho tên người dùng khi đã đăng nhập */
+.account-dropdown > a {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.account-dropdown > a .fa-user-circle {
+    font-size: 18px;
+}
+
+/* Highlight khi hover */
+.account-dropdown:hover > a {
+    color: #ff6600;
+}
+
+/* Style cho submenu item logout */
+.account-submenu li a[onclick*="handleLogoutFromIndex"] {
+    color: #dc3545;
+}
+
+.account-submenu li a[onclick*="handleLogoutFromIndex"]:hover {
+    background-color: #fff5f5;
+    color: #dc3545;
+}
