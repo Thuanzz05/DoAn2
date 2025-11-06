@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập Admin - NDT Gift</title>
+    <link rel="stylesheet" href="styles/styleAdminLogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-user-shield"></i>
+            <h2>Đăng Nhập Quản Trị</h2>
+            <p>NDT Gift Shop</p>
+        </div>
+
+        <div class="alert alert-error" id="error-alert">
+            <i class="fas fa-exclamation-circle"></i> Tên đăng nhập hoặc mật khẩu không đúng!
+        </div>
+
+        <form id="admin-login-form">
+            <div class="form-group">
+                <label for="admin-username">
+                    <i class="fas fa-user"></i> Tên đăng nhập
+                </label>
+                <input type="text" class="form-control" id="admin-username" required placeholder="Nhập tên đăng nhập">
+            </div>
+
+            <div class="form-group">
+                <label for="admin-password">
+                    <i class="fas fa-lock"></i> Mật khẩu
+                </label>
+                <input type="password" class="form-control" id="admin-password" required placeholder="Nhập mật khẩu">
+            </div>
+
+            <button type="submit" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Đăng Nhập
+            </button>
+        </form>
+
+        <div class="back-home">
+            <a href="index.html">
+                <i class="fas fa-arrow-left"></i> Về trang chủ
+            </a>
+        </div>
+    </div>
+
+    <script src="scripts/admin/adminLogin.js"></script>
+</body>
+</html>
